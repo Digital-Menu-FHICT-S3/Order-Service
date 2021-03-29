@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.online-menu</groupId>
-	<artifactId>order-service</artifactId>
+	<artifactId>foodOrder-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>order-service</name>
+	<name>foodOrder-service</name>
 	<description>Order Service for Online Menu</description>
 	<properties>
 		<java.version>11</java.version>

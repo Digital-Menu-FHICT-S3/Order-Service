@@ -13,10 +13,10 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class FoodOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
-
+    private String test;
 }
