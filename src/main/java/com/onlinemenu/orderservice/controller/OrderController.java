@@ -23,9 +23,4 @@ public class OrderController {
     public Optional<FoodOrder> findOrderById(@PathVariable("id") Long orderId){
         return orderService.findOrderById(orderId);
     }
-
-    @GetMapping("/test")
-    public FoodOrder test(){
-        return new FoodOrder(1L,"test");
-    }
 }
