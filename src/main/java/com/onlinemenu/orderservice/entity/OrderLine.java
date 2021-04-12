@@ -14,14 +14,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FoodOrder {
+public class OrderLine {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long orderId;
-    private Long tableId;
-    private double totalPrice;
-    private double tip;
-    private LocalDateTime dateTime;
-    private OrderLine[] orderLines;
+    private Long orderLineId;
+    private Long OrderId;
+    private Long dishId;
+    private int amount;
+
 }
