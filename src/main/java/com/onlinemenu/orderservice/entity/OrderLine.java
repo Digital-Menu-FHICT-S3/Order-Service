@@ -19,7 +19,7 @@ public class OrderLine {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderLineId;
-    private Long OrderId;
+    private Long orderId;
     private Long dishId;
     private int amount;
 
