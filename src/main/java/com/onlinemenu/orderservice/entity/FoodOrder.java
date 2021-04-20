@@ -23,5 +23,5 @@ public class FoodOrder {
     private double totalPrice;
     private double tip;
     private LocalDateTime dateTime;
-    private OrderLine[] orderLines;
+//    private OrderLine[] orderLines;
 }
