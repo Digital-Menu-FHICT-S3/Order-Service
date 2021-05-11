@@ -22,5 +22,6 @@ public class OrderService {
         return orderRepository.findById(orderId);
     }
 
-    public List<FoodOrder> GetAllFoodOrder() { return orderRepository.findAll();}
+    public List<FoodOrder> GetAllFoodOrder() { return orderRepository.findAll(); }
 }
+

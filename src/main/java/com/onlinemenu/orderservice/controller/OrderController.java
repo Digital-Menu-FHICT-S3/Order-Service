@@ -5,6 +5,7 @@ import com.onlinemenu.orderservice.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,4 +28,9 @@ public class OrderController {
 
     @GetMapping("/all")
     public List<FoodOrder> getAllFoodOrder() {return orderService.GetAllFoodOrder();}
+
+    @PutMapping("/update/{id}")
+    public FoodOrder UpdateOrderToDone(@PathVariable("id") Long OrderId, @RequestBody FoodOrder foodOrder) {
+        return orderService.saveOrder(foodOrder);
+    }
 }
