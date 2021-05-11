@@ -20,6 +20,7 @@ public class FoodOrder {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long orderId;
     private Long tableId;
+    private String orderStatus;
     private double totalPrice;
     private double tip;
     private LocalDateTime dateTime;
