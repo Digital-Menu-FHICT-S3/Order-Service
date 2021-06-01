@@ -44,11 +44,11 @@ class OrderControllerTest {
     @Test
     void saveOrder() throws Exception {
 
-        FoodOrder foodOrder = new FoodOrder(1l,2l, OrderStatus.ToDo,13.0,3.0,LocalDateTime.now());
+        FoodOrder foodOrder = new FoodOrder(1L,2L, OrderStatus.ToDo,13.0,3.0,LocalDateTime.now());
         List<OrderLineDto> orderLines = new ArrayList<>();
-        orderLines.add(new OrderLineDto(4l,5));
-        orderLines.add(new OrderLineDto(1l,7));
-        orderLines.add(new OrderLineDto(2l,2));
+        orderLines.add(new OrderLineDto(4L,5));
+        orderLines.add(new OrderLineDto(1L,7));
+        orderLines.add(new OrderLineDto(2L,2));
 
         FoodOrderDto OrderToPost = new FoodOrderDto(foodOrder,orderLines);
         String OrderAsString = mapper.writeValueAsString(OrderToPost);
