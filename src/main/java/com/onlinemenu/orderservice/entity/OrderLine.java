@@ -23,4 +23,9 @@ public class OrderLine {
     private Long dishId;
     private int amount;
 
+    public OrderLine(long _orderId, long _dishId, int _amount) {
+        orderId = _orderId;
+        dishId = _dishId;
+        amount = _amount;
+    }
 }
