@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dish {
+public class DishVO {
     private Long dishId;
     private Long categoryId;
     private String name;
