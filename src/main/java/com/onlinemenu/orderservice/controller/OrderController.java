@@ -78,14 +78,8 @@ public class OrderController {
                 .stream().map(orderLine -> orderLine.getDishId())
                 .collect(Collectors.toList());
         HttpEntity<List<Long>> ingredientRequest = new HttpEntity<>(DishIds);
-        try {
-            var dishesWithIngredients = restTemplate.postForEntity(allIngredientUrl, ingredientRequest, DishVO[].class);
 
-        } catch (Exception e) {
-            e.getCause();
-        }
-
-        return new DishVO[0];
+        return restTemplate.postForObject(allIngredientUrl, ingredientRequest, DishVO[].class);
     }
 
     private ArrayList<Ingredient> getIngredients(FoodOrderDto dto, DishVO[] dishes) {
@@ -96,13 +90,14 @@ public class OrderController {
             var dishId = orderLine.getDishId();
             var dishIngredients = Arrays.stream(Objects.requireNonNull(dishes))
                     .filter(x -> x.getDishId().equals(dishId))
-                    .findFirst().get().getIngredients();
+                    .findFirst().orElse(null);
 
-            //Loop over all ingredients in a dish
-            for (var ingredient : dishIngredients) {
-                var usedIngredient = new Ingredient(ingredient.getIngredientId(),
-                        ingredient.getAmount() * orderLine.getAmount(), ingredient.getName());
-                usedIngredients.add(usedIngredient);
+            if (dishIngredients != null) {
+                for (var ingredient : dishIngredients.getIngredients()) {
+                    var usedIngredient = new Ingredient(ingredient.getIngredientId(),
+                            ingredient.getAmount() * orderLine.getAmount(), ingredient.getName());
+                    usedIngredients.add(usedIngredient);
+                }
             }
         }
         return usedIngredients;
