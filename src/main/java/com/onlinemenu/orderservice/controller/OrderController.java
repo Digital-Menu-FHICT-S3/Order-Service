@@ -3,7 +3,6 @@ package com.onlinemenu.orderservice.controller;
 import com.onlinemenu.orderservice.VO.DishVO;
 import com.onlinemenu.orderservice.VO.Ingredient;
 import com.onlinemenu.orderservice.dto.FoodOrderDto;
-import com.onlinemenu.orderservice.dto.OrderLineDto;
 import com.onlinemenu.orderservice.entity.FoodOrder;
 import com.onlinemenu.orderservice.entity.OrderLine;
 import com.onlinemenu.orderservice.service.OrderLineService;
@@ -30,14 +29,14 @@ public class OrderController {
     private RestTemplate restTemplate;
 
 
-    //TODO: Integration Test
+    //TODO: Integration Test (Mohammad)
     @PostMapping("/create")
     public FoodOrder saveOrder(@RequestBody FoodOrderDto foodOrderDto) {
 
         if (foodOrderDto.getOrderLines() == null || foodOrderDto.getOrderLines().size() == 0)
             return new FoodOrder();
 
-        DishVO[] dishesWithIngredients = getIngredients(foodOrderDto);
+        DishVO[] dishesWithIngredients = fetchDishesWithIngredients(foodOrderDto);
 
         // Save Order
         FoodOrder foodOrder = orderService.saveOrder(foodOrderDto.getFoodOrder());
@@ -45,12 +44,12 @@ public class OrderController {
                 f -> new OrderLine(foodOrder.getOrderId(), f.getDishId(), f.getAmount())).collect(Collectors.toList());
         orderLineService.saveOrderLines(orderLines);
 
-        ArrayList<Ingredient> usedIngredients = getIngredients(foodOrderDto, dishesWithIngredients);
+        ArrayList<Ingredient> usedIngredients = fetchDishesWithIngredients(foodOrderDto, dishesWithIngredients);
 
-//        //Call SubtractIngredients from Ingredient Service.
-//        String subtractIngredientsUrl = "http://locahost:9191/ingredient/subtract";
-//        HttpEntity<List<Ingredient>> subtractRequest = new HttpEntity<>(usedIngredients);
-//        restTemplate.postForObject(subtractIngredientsUrl, subtractRequest, Void.class);
+        // Call SubtractIngredients from Ingredient Service.
+        String subtractIngredientsUrl = "http://localhost:9191/ingredient/subtract";
+        HttpEntity<List<Ingredient>> subtractRequest = new HttpEntity<>(usedIngredients);
+        restTemplate.postForEntity(subtractIngredientsUrl, subtractRequest, Void.class);
 
         return foodOrder;
     }
@@ -72,7 +71,7 @@ public class OrderController {
 
 
     //Call GetAllIngredients from Menu Service To Get Ingredients of Dishes
-    private DishVO[] getIngredients(FoodOrderDto foodOrderDto){
+    private DishVO[] fetchDishesWithIngredients(FoodOrderDto foodOrderDto) {
         String allIngredientUrl = "http://localhost:9191/menu/dishes/dishes-with-ingredients";
         List<Long> DishIds = foodOrderDto.getOrderLines()
                 .stream().map(orderLine -> orderLine.getDishId())
@@ -82,7 +81,7 @@ public class OrderController {
         return restTemplate.postForObject(allIngredientUrl, ingredientRequest, DishVO[].class);
     }
 
-    private ArrayList<Ingredient> getIngredients(FoodOrderDto dto, DishVO[] dishes) {
+    private ArrayList<Ingredient> fetchDishesWithIngredients(FoodOrderDto dto, DishVO[] dishes) {
         var usedIngredients = new ArrayList<Ingredient>();
 
         //Loop over all items in an order
