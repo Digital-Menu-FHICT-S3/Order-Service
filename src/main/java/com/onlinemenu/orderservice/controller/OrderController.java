@@ -29,7 +29,6 @@ public class OrderController {
     private RestTemplate restTemplate;
 
 
-    //TODO: Integration Test (Mohammad)
     @PostMapping("/create")
     public FoodOrder saveOrder(@RequestBody FoodOrderDto foodOrderDto) {
 

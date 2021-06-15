@@ -5,6 +5,7 @@ import com.onlinemenu.orderservice.dto.FoodOrderDto;
 import com.onlinemenu.orderservice.dto.OrderLineDto;
 import com.onlinemenu.orderservice.entity.FoodOrder;
 import com.onlinemenu.orderservice.entity.OrderStatus;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,7 @@ class OrderControllerTest {
     private MockMvc mvc;
 
     @Test
+    @Disabled //Curently disabled because this test communicates with other services
     void saveOrder() throws Exception {
 
         FoodOrder foodOrder = new FoodOrder(1L,2L, OrderStatus.ToDo,13.0,3.0,LocalDateTime.now());
